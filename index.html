@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="xterm/dist/xterm.css" />
+  <script src="xterm/dist/xterm.js"></script>
+</head>
+
+<body>
+  <div id="terminal"></div>
+  <script>
+    var term = new Terminal();
+    var randomness1 = ""
+    term.open(document.getElementById('terminal'));
+    term.writeln('')
+    function matrix() {
+      characters = 'Ω≈ç√∫˜µ≤≥÷åß∂ƒ©˙∆˚¬…æœ∑´®†¥¨ˆøπ“‘¡™£¢∞§¶•ªº–≠¸˛Ç◊ı˜Â¯˘¿ÅÍÎÏ˝ÓÔÒÚÆ☃Œ„´‰ˇÁ¨ˆØ∏⁄€‹›ﬁﬂ‡°·‚—±田中さんにあげて下さいパーティーへ行かないか和製漢語部落格사회과학원 어학연구소찦차를 타고 온 펲시맨과 쑛다리 똠방각하社會科學院語學研究所울란바토르';
+      charactersLength = characters.length;
+        for (var i = 0; i < 30; i++) {
+          randomness1 += characters.charAt(Math.floor(Math.random() * charactersLength));
+              }
+        term.writeln("\x1B[32;1m"+randomness1 + "\x1B[0m")
+        randomness1=''
+
+    }
+
+
+    function logo() {
+      term.writeln('\x1B[1;3;31m▓\x1B[0m█████ \x1B[1;3;31m  \x1B[0m█████   █████   ███▄    █ ')
+      term.writeln('\x1B[1;3;31m▓\x1B[0m█   ▀ \x1B[1;3;31m▒\x1B[0m██▓  ██\x1B[1;3;31m▒▒\x1B[0m██▓  ██\x1B[1;3;31m▒ \x1B[0m██ ▀█   █ ')
+      term.writeln('\x1B[1;3;31m▒\x1B[0m███   \x1B[1;3;31m▒\x1B[0m██\x1B[1;3;31m▒  \x1B[0m██\x1B[1;3;31m░▒\x1B[0m██\x1B[1;3;31m▒  \x1B[0m██\x1B[1;3;31m░▓\x1B[0m██  ▀█ ██\x1B[1;3;31m▒\x1B[0m')
+      term.writeln('\x1B[1;3;31m▒\x1B[0m▓█  ▄ \x1B[1;3;31m░\x1B[0m██  █▀ \x1B[1;3;31m░░\x1B[0m██  █▀ \x1B[1;3;31m░\x1B[0m▓██\x1B[1;3;31m▒  \x1B[0m▐▌██\x1B[1;3;31m▒\x1B[0m')
+      term.writeln('\x1B[1;3;31m░▒\x1B[0m████\x1B[1;3;31m▒░▒\x1B[0m███\x1B[1;3;31m▒\x1B[0m█▄\x1B[1;3;31m ░▒\x1B[0m███\x1B[1;3;31m▒\x1B[0m█▄ \x1B[1;3;31m▒\x1B[0m██\x1B[1;3;31m░   \x1B[0m▓██\x1B[1;3;31m░\x1B[0m')
+      term.writeln('\x1B[1;3;31m░░ ▒░ ░░░ ▒▒░ ▒ ░░ ▒▒░ ▒ ░ ▒░   ▒ ▒ \x1B[0m')
+      term.writeln('\x1B[1;3;31m ░ ░  ░ ░ ▒░  ░  ░ ▒░  ░ ░ ░░   ░ ▒░\x1B[0m')
+      term.writeln('\x1B[1;3;31m   ░      ░   ░    ░   ░    ░   ░ ░ \x1B[0m')
+      term.writeln('\x1B[1;3;31m   ░  ░    ░        ░             ░\x1B[0m')
+    }
+    logo();
+    menu();
+function menu(){
+  term.writeln(' Menu : ')
+    term.writeln(' 1: Get Flag ');
+    term.writeln(' 2: Enter the Matrix');
+    term.writeln(' 3: Get hint')
+}
+
+    var character = ''
+
+var ciphertext="27233614190e001d1d172b06073017001b03111d2b1b1c0e1a30120315080712";
+var key="toto";
+// 74 6f 74 6f
+
+// i used this cool military grade encryption function to encrypt the flag!
+function encryptStringWithXORtoHex(input,key) {
+    var c = '';
+    while (key.length < input.length) {
+         key += key;
+    }
+    for(var i=0; i<input.length; i++) {
+        var value1 = input[i].charCodeAt(0);
+        var value2 = key[i].charCodeAt(0);
+
+        var xorValue = value1 ^ value2;
+
+        var xorValueAsHexString = xorValue.toString("16");
+        console.log(xorValue);
+
+        if (xorValueAsHexString.length < 2) {
+            xorValueAsHexString = "0" + xorValueAsHexString;
+        }
+
+        c += xorValueAsHexString;
+    }
+    return c;
+}
+
+function flag(){
+  var flag = decryptHexXortoString("00071d1c5406074f1a00004f0007114f17060407111d000a0c1b54161b1a540e060a54031b001f061a0854091b1d",key);
+}
+
+ function decryptHexXortoString(input, key) {
+    var c = [''];
+    var nicestring='';
+    while (key.length < input.length / 2) {
+      key += key;
+    }
+
+    for (var i = 0; i < input.length; i += 2) {
+      var hexValueString = input.substring(i, i + 2);
+
+      var value1 = parseInt( hexValueString,"16");
+      var value2 = key.charAt(i / 2).charCodeAt(0);
+
+      var xorValue = value1 ^ value2;
+      if (xorValue.length < 2) {
+            xorValue = "0" + xorValue;
+        }
+      var outputs=xorValue;
+
+      c=c + xorValue.fromCharCode;
+        nicestring+=String.fromCharCode(outputs)
+     // console.log(String.fromCharCode(c));
+    }
+    // console.log(c); returns undefined
+    term.writeln(nicestring);
+    return nicestring
+  };
+
+function checkCommand (inputs){
+  
+        term.write('\n');
+        console.log(inputs);
+        if (command == '1') {
+          term.writeln('Oh sorry I haven\'t implemented that yet, but if you find a way to call flag() you are welcome to take it...')
+          menu();
+        }
+
+        if (inputs == '2') {
+          for (var i = 0; i < 20; i++) { matrix() }
+          menu();
+        } 
+        
+        if (inputs=="flag()") {
+          term.writeln('nice try, but try the other console :)');
+          menu();
+        }
+
+        if (inputs=="3"){
+          term.writeln("Reading source code might help");
+          menu();
+        }
+      
+}
+
+  var buffer ='';
+ var command = '';
+    term.onKey(e => {
+      const printable = !e.domEvent.altKey && !e.domEvent.altGraphKey && !e.domEvent.ctrlKey && !e.domEvent.metaKey;
+
+      if (e.domEvent.keyCode === 13) {
+        checkCommand(command);
+        command='';
+      }
+
+      if (e.domEvent.keyCode === 8) {
+        // Do not delete the prompt
+        if (term._core.buffer.x > 2) {
+          term.write('\b \b');
+        }
+      } else if (printable && !(e.domEvent.keyCode === 13)) {
+        command = command + e.key
+        
+        term.write(e.key);
+      }
+    });
+  </script>
+</body>
+
+</html>

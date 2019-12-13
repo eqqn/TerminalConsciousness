@@ -1,0 +1,12 @@
+{
+  "name": "appengine-hello-world",
+  "description": "Simple Hello World Node.js sample for Google App Engine Standard Environment.",
+  "version": "0.0.1",
+  "private": true,
+  "license": "Apache-2.0",
+  "author": "Google Inc.",
+  "dependencies": {
+    "express": "^4.17.1",
+    "xterm": "3.13.2"
+  }
+}
